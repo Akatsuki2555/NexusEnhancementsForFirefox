@@ -17,21 +17,24 @@ blockedUsers.then((result) => {
 
 function removeUser(user) {
     return function () {
-        let users = blockedUsers.blockedUsers;
-        let index = users.indexOf(user);
-        users.splice(index, 1);
-        browser.storage.local.set({ blockedUsers: users });
-        let usersList = document.getElementById("blocked-users");
-        usersList.removeChild(usersList.childNodes[index]);
+        (async () => {
+            let { blockedUsers } = await browser.storage.local.get({ blockedUsers: [] });
+            blockedUsers = blockedUsers.filter((u) => u !== user);
+            await browser.storage.local.set({ blockedUsers });
+            location.reload();
+        })();
     };
 }
 
 function addUser() {
-    let userName = document.getElementById("user-name").value;
-    let users = blockedUsers.blockedUsers;
-    users.push(userName);
-    browser.storage.local.set({ blockedUsers: users });
-    location.reload();
+    (async () => {
+        let userName = document.getElementById("user-name").value;
+        let { blockedUsers } = await browser.storage.local.get({ blockedUsers: [] });
+        blockedUsers.push(userName);
+        await browser.storage.local.set({ blockedUsers });
+        document.getElementById('user-name').value = '';
+        location.reload();
+    })();
 }
 
 document.getElementById("add-user-btn").onclick = addUser;
