@@ -1,16 +1,24 @@
 {
-
     "manifest_version": 2,
     "name": "Nexus Enhancements",
     "version": "1.0",
-
     "description": "Enhances experience on NexusMods",
-    "permissions": ["activeTab", "storage"],
-
+    "permissions": [
+        "activeTab",
+        "storage"
+    ],
     "content_scripts": [
         {
-            "matches": ["*://*.nexusmods.com/*"],
-            "js": ["nexusmods.js"]
+            "matches": [
+                "*://*.nexusmods.com/*"
+            ],
+            "js": [
+                "nexusscripts/mods.js"
+            ]
         }
-    ]
+    ],
+
+    "browser_action": {
+        "default_popup": "popup/popup.html"
+    }
 }
