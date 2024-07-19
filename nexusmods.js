@@ -17,9 +17,8 @@ console.log("Test");
 
 (async() => {
     if (location.search.indexOf('tab=posts') > -1) {
-        let blockedUsers = await browser.storage.local.get("blockedUsers");
-        if (blockedUsers == null)
-            blockedUsers = [];
+        let blockedUsers = await browser.storage.local.get({ blockedUsers: [] });
+        blockedUsers = blockedUsers.blockedUsers;
     
         let comments = document.querySelectorAll(".comment");
         comments.forEach(element => {
@@ -27,7 +26,7 @@ console.log("Test");
             let comment = element.children[2].textContent;
             console.log(commenter);
             console.log(comment);
-            if (blockedUsers.contains(commenter)) {
+            if (blockedUsers.includes(commenter)) {
                 element.style.display = "none";
             }
         });
