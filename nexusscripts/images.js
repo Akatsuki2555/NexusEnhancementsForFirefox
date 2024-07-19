@@ -17,22 +17,21 @@ console.log("Test");
 
 setInterval(() => {
     (async() => {
-        if (location.search.indexOf('tab=posts') > -1) {
-            let blockedUsers = await browser.storage.sync.get({ blockedUsers: [] });
-            blockedUsers = blockedUsers.blockedUsers;
-        
-            let comments = document.querySelectorAll(".comment");
-            comments.forEach(element => {
-                let commenter = element.children[1].children[1].children[0].children[0].textContent;
-                let comment = element.children[2].textContent;
-                console.log(commenter);
-                console.log(comment);
-                if (blockedUsers.includes(commenter)) {
-                    element.style.display = "none";
-                }
-            });
-        }
+
+        let blockedUsers = await browser.storage.sync.get({ blockedUsers: [] });
+        blockedUsers = blockedUsers.blockedUsers;
+    
+        let comments = document.querySelectorAll(".comment");
+        comments.forEach(element => {
+            let commenter = element.children[1].children[1].children[0].children[0].textContent;
+            let comment = element.children[2].textContent;
+            console.log(commenter);
+            console.log(comment);
+            if (blockedUsers.includes(commenter)) {
+                element.style.display = "none";
+            }
+        });
     })().then(x => {
         console.log("Execution of extension finished!");
     });
-}, 100)
+}, 100);

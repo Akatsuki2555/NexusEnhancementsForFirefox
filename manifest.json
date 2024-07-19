@@ -15,6 +15,14 @@
             "js": [
                 "nexusscripts/mods.js"
             ]
+        },
+        {
+            "matches": [
+                "*://*.nexusmods.com/*/images/*"
+            ],
+            "js": [
+                "nexusscripts/images.js"
+            ]
         }
     ],
 

@@ -1,4 +1,4 @@
-let blockedUsers = browser.storage.local.get({ blockedUsers: [] });
+let blockedUsers = browser.storage.sync.get({ blockedUsers: [] });
 
 blockedUsers.then((result) => {
     let users = result.blockedUsers;
@@ -18,9 +18,9 @@ blockedUsers.then((result) => {
 function removeUser(user) {
     return function () {
         (async () => {
-            let { blockedUsers } = await browser.storage.local.get({ blockedUsers: [] });
+            let { blockedUsers } = await browser.storage.sync.get({ blockedUsers: [] });
             blockedUsers = blockedUsers.filter((u) => u !== user);
-            await browser.storage.local.set({ blockedUsers });
+            await browser.storage.sync.set({ blockedUsers });
             location.reload();
         })();
     };
@@ -29,9 +29,9 @@ function removeUser(user) {
 function addUser() {
     (async () => {
         let userName = document.getElementById("user-name").value;
-        let { blockedUsers } = await browser.storage.local.get({ blockedUsers: [] });
+        let { blockedUsers } = await browser.storage.sync.get({ blockedUsers: [] });
         blockedUsers.push(userName);
-        await browser.storage.local.set({ blockedUsers });
+        await browser.storage.sync.set({ blockedUsers });
         document.getElementById('user-name').value = '';
         location.reload();
     })();
